@@ -24,9 +24,9 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
-    doc.body.appendChild(canvas);
+    // canvas.width = 505;
+    // canvas.height = 606;
+    // doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -78,8 +78,23 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
+        removeOffScreenEntities();
         updateEntities(dt);
+        checkCollisions();
+        // updateEntities(dt);
         // checkCollisions();
+    }
+
+    /**
+     * This function will remove enemies out of the borders of the canvas from
+     * allEnemies array.
+     */
+    function removeOffScreenEntities() {
+        allEnemies.forEach(function (enemy, index) {
+            if (enemy.x > canvas.width) {
+                allEnemies.splice(index, 1);
+            }
+        });
     }
 
     /* This is called by the update function and loops through all of the
@@ -89,6 +104,8 @@ var Engine = (function(global) {
      * the data/properties related to the object. Do your drawing in your
      * render methods.
      */
+
+
     function updateEntities(dt) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
@@ -162,6 +179,7 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+        game.reset();
     }
 
     /* Go ahead and load all of the images we know we're going to need to
