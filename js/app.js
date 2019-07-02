@@ -1,3 +1,98 @@
+Class GameObject {
+    constructor() {
+
+    }
+
+    update() { }
+    reset() { }
+    render() { }
+    collides(object) { }
+
+}
+
+Class Enemy extends GameObject {
+    constructor() {
+
+    }
+
+    /**
+    * Update object's position
+    *
+    * @param {number} dt   a time delta between tick to ensure
+    *                      same game speed across all computers
+    */
+
+    update(dt) { }
+    reset() { }
+
+    static generateEnemies（） { }
+    static resetAllEnemies（） { } 
+}
+
+Class Gem extends GameObject {
+    constructor() {
+
+    }
+
+    static expireGem(gem) {
+
+    }
+
+    static generateGem(gem) {
+
+    }
+}
+
+Class Player extends GameObject {
+    constructor() {
+
+    }
+
+    reset() {
+
+    }
+
+    handleInput() {
+
+    }
+}
+
+Class Game {
+
+    constructor() {
+
+    }
+
+    get Score() {
+
+    }
+
+    set Score() {
+
+    }
+
+    start(){
+
+    }
+
+    updateScoreBoard() {
+
+    }
+
+    reset() {
+
+    }
+
+    die() {
+
+    }
+
+    win() {
+        
+    }
+
+}
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
