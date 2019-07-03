@@ -1,35 +1,50 @@
-Class GameObject {
-    constructor() {
-
+class GameObject {
+    constructor(sprite, x, y, width = 0, height = 0) {
+        this.sprite = sprite;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
 
-    update() { }
+    update(dt = 0) { }
+
     reset() { }
-    render() { }
-    collides(object) { }
+
+    render() { 
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
+    collides(object) {
+        const xCheck = this.x <= other.x + other.width / 2 &&
+            this.x >= other.x - other.width / 2;
+        const yCheck = other.y <= this.y + this.height / 2 &&
+            other.y >= this.y;
+        return xCheck && yCheck;
+    }
 
 }
 
-Class Enemy extends GameObject {
+class Enemy extends GameObject {
     constructor() {
 
     }
-
-    /**
-    * Update object's position
-    *
-    * @param {number} dt   a time delta between tick to ensure
-    *                      same game speed across all computers
-    */
 
     update(dt) { }
     reset() { }
 
-    static generateEnemies（） { }
-    static resetAllEnemies（） { } 
+    static generateEnemies() {
+        allEnemies.push(new Enemy());
+        const delay = randElement(ENEMY_CREATION_DELAYS);
+        setTimeout(Enemy.generateEnemies, delay);
+    }
+
+    static resetAllEnemies() { 
+
+    } 
 }
 
-Class Gem extends GameObject {
+class Gem extends GameObject {
     constructor() {
 
     }
@@ -43,7 +58,7 @@ Class Gem extends GameObject {
     }
 }
 
-Class Player extends GameObject {
+class Player extends GameObject {
     constructor() {
 
     }
@@ -57,7 +72,7 @@ Class Player extends GameObject {
     }
 }
 
-Class Game {
+class Game {
 
     constructor() {
 
@@ -88,7 +103,7 @@ Class Game {
     }
 
     win() {
-        
+
     }
 
 }
