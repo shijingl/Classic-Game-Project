@@ -101,3 +101,334 @@ var GameObject = function () {
 
     return GameObject;
 }();
+
+
+// Enemies our player must avoid
+var Enemy = function (_GameObject) {
+    _inherits(Enemy, _GameObject);
+
+    function Enemy() {
+        _classCallCheck(this, Enemy);
+
+        var y = randElement(ENEMY_Y_POSITIONS);
+
+        var _this = _possibleConstructorReturn(this, (Enemy.__proto__ || Object.getPrototypeOf(Enemy)).call(this, 'images/enemy-bug.png', 0, y, 101, 171));
+
+        _this.speed = randElement(ENEMY_SPEEDS);
+        return _this;
+    }
+
+    /**
+    * Update object's position
+    *
+    * @param {number} dt   a time delta between tick to ensure
+    *                      same game speed across all computers
+    */
+
+
+    _createClass(Enemy, [{
+        key: 'update',
+        value: function update(dt) {
+            this.x += this.speed * dt;
+        }
+
+        /**
+        * Reset object to ints initial state
+        */
+
+    }, {
+        key: 'reset',
+        value: function reset() {
+            this.x = 0;
+        }
+
+        /**
+        * Static method to create new Enemy objects randomly
+        */
+
+    }], [{
+        key: 'generateEnemies',
+        value: function generateEnemies() {
+            allEnemies.push(new Enemy());
+            var delay = randElement(ENEMY_CREATION_DELAYS);
+            setTimeout(Enemy.generateEnemies, delay);
+        }
+
+        /**
+        * Reset all objects inside allEnemies array to their initial states
+        */
+
+    }, {
+        key: 'resetAllEnemies',
+        value: function resetAllEnemies() {
+            allEnemies.forEach(function (enemy) {
+                return enemy.reset();
+            });
+        }
+    }]);
+
+    return Enemy;
+}(GameObject);
+
+/**
+ * Game class holding general game info like score and managing game states
+ */
+var Game = function () {
+    function Game() {
+        _classCallCheck(this, Game);
+
+        this._score = 0;
+        // Generate Audio objects
+        this.jumpAudio = new Audio();
+        this.winLoseAudio = new Audio();
+        this.powerUpAudio = new Audio();
+        // Initialize game
+        this.start();
+    }
+
+    /**
+     * Getter method for score field
+     */
+
+
+    _createClass(Game, [{
+        key: 'start',
+
+
+        /**
+         * Initialize and start game
+         */
+        value: function start() {
+            // Play start sound
+            this.playStart();
+            // Randomly generate enemies
+            Enemy.generateEnemies();
+            // Instantiate and place the player object in a variable called player
+            player = new Player();
+            // Instantiate gem object
+            Gem.generateGems();
+        }
+
+        /**
+         * Update score board, whenever score is updated
+         */
+
+    }, {
+        key: 'updateScoreBoard',
+        value: function updateScoreBoard() {
+            scoreElement.textContent = this._score;
+        }
+
+        /**
+         * Reset game state
+         */
+
+    }, {
+        key: 'reset',
+        value: function reset() {
+            this._score = 0;
+            Enemy.resetAllEnemies();
+            player.reset();
+        }
+
+        /**
+         * Manage case when player collides with bugs
+         */
+
+    }, {
+        key: 'die',
+        value: function die() {
+            this.playDeath();
+            animateScoreLost();
+            this.score -= 50;
+            player.reset();
+        }
+
+        /**
+         * Manage case when player reaches water
+         */
+
+    }, {
+        key: 'win',
+        value: function win() {
+            this.playWin();
+            animateScoreAdd();
+            this.score += 10;
+            player.reset();
+        }
+
+        /**
+         * Manage case when player collides with gem
+         *
+         * @param {Gem} gem     gem that player collided with
+         */
+
+    }, {
+        key: 'powerUp',
+        value: function powerUp(gem) {
+            Gem.expireGem(gem);
+            this.playPowerup();
+            animateScoreAdd();
+            this.score += gem.value;
+        }
+
+        /**
+         * Play start audio
+         */
+
+    }, {
+        key: 'playStart',
+        value: function playStart() {
+            this.winLoseAudio.src = 'sounds/start.wav';
+            this.play(this.winLoseAudio);
+        }
+
+        /**
+         * Play win audio
+         */
+
+    }, {
+        key: 'playWin',
+        value: function playWin() {
+            this.winLoseAudio.src = 'sounds/win.wav';
+            this.play(this.winLoseAudio);
+        }
+
+        /**
+         * Play death audio
+         */
+
+    }, {
+        key: 'playDeath',
+        value: function playDeath() {
+            this.winLoseAudio.src = 'sounds/death.wav';
+            this.play(this.winLoseAudio);
+        }
+
+        /**
+         * Play powerup audio
+         */
+
+    }, {
+        key: 'playPowerup',
+        value: function playPowerup() {
+            this.powerUpAudio.src = 'sounds/powerup.wav';
+            this.play(this.powerUpAudio);
+        }
+
+        /**
+         * Play jump audio
+         */
+
+    }, {
+        key: 'playJump',
+        value: function playJump() {
+            this.jumpAudio.src = 'sounds/jump.wav';
+            this.play(this.jumpAudio);
+        }
+
+        /**
+         * Play audio
+         *
+         * @param {Audio} audio     audio object that should be played
+         */
+
+    }, {
+        key: 'play',
+        value: function play(audio) {
+            audio.play();
+        }
+    }, {
+        key: 'score',
+        get: function get() {
+            return this._score;
+        }
+
+        /**
+         * Setter method for score field
+         *
+         * @param (Number) newScore     new score
+         */
+        ,
+        set: function set(newScore) {
+            this._score = Math.max(0, newScore);
+            this.updateScoreBoard();
+        }
+    }]);
+
+    return Game;
+}();
+
+// Function to animate clouds after page load
+window.onload = function () {
+    var tl = new TimelineMax({ repeat: -1 });
+    tl.to("#clouds", 30, {
+        backgroundPosition: "-2247px 0px",
+        //autoRound:false,
+        ease: Linear.easeNone
+    });
+};
+
+/**
+ * IIFE starting game
+ */
+void function startGame() {
+    game = new Game();
+}();
+
+// Listen for clicks and close modal when close button
+modalCloseBtn.addEventListener('click', toggleModal);
+
+// Listens for key presses and send the keys to Player.handleInput() method
+document.addEventListener('keyup', function (e) {
+    var allowedKeys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+    };
+
+    player.handleInput(allowedKeys[e.keyCode]);
+});
+
+/**
+* Open/close modal
+*/
+function toggleModal() {
+    modal.classList.toggle('close');
+}
+
+/**
+* Select array element randomly
+*
+* @param {Array} arr   array to select random element from
+*/
+function randElement(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+/**
+ * Add score-add class to score-board to animate score increase
+ */
+function animateScoreAdd() {
+    removeScoreAnimations();
+    scoreBoard.classList.add('score-add');
+}
+
+/**
+ * Add score-lost class to score-board to animate score decrease
+ */
+function animateScoreLost() {
+    removeScoreAnimations();
+    scoreBoard.classList.add('score-lost');
+}
+
+/**
+ * Remove previous animation class from score-board and force reflow
+ */
+function removeScoreAnimations() {
+    scoreBoard.classList.remove('score-add');
+    scoreBoard.classList.remove('score-lost');
+    void scoreBoard.offsetWidth;
+}
+
