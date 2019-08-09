@@ -59,6 +59,14 @@ var GameObject = function () {
         this.height = height;
     }
 
+    /**
+    * Update object's position
+    *
+    * @param {number} dt   a time delta between tick to ensure
+    *                      same game speed across all computers
+    */
+
+
     _createClass(GameObject, [{
         key: 'update',
         value: function update() {
@@ -102,8 +110,9 @@ var GameObject = function () {
     return GameObject;
 }();
 
-
 // Enemies our player must avoid
+
+
 var Enemy = function (_GameObject) {
     _inherits(Enemy, _GameObject);
 
@@ -170,9 +179,173 @@ var Enemy = function (_GameObject) {
     return Enemy;
 }(GameObject);
 
+// Gems our player must collect
+
+
+var Gem = function (_GameObject2) {
+    _inherits(Gem, _GameObject2);
+
+    function Gem() {
+        _classCallCheck(this, Gem);
+
+        var x = randElement(GEM_X_POSITIONS);
+        var y = randElement(GEM_Y_POSITIONS);
+        var stripe = randElement(GEM_STRIPES);
+
+        var _this2 = _possibleConstructorReturn(this, (Gem.__proto__ || Object.getPrototypeOf(Gem)).call(this, stripe, x, y, 50, 85));
+
+        _this2.expireTime = randElement(GEM_EXPIRE_TIMES);
+        switch (stripe) {
+            case GEM_STRIPES[0]:
+                _this2.value = 20;
+                break;
+            case GEM_STRIPES[1]:
+                _this2.value = 30;
+                break;
+            case GEM_STRIPES[2]:
+                _this2.value = 50;
+                break;
+            default:
+                _this2.value = 20;
+                break;
+        }
+        return _this2;
+    }
+
+    /**
+     * Static method to remove expired gems from array
+     *
+     * @param {Gem} gem     expired gem, to be removed from array
+     */
+
+
+    _createClass(Gem, null, [{
+        key: 'expireGem',
+        value: function expireGem(gem) {
+            allGems.forEach(function (element, index) {
+                if (gem == element) {
+                    allGems.splice(index, 1);
+                }
+            });
+        }
+
+        /**
+        * Static method to create new Enemy objects randomly
+        */
+
+    }, {
+        key: 'generateGems',
+        value: function generateGems() {
+            var gem = new Gem();
+            allGems.push(gem);
+            setTimeout(function () {
+                Gem.expireGem(gem);
+            }, gem.expireTime);
+            setTimeout(Gem.generateGems, randElement(GEM_DELAY_TIMES));
+        }
+    }]);
+
+    return Gem;
+}(GameObject);
+
+// Now write your own player class
+// This class requires an update(), render() and
+// a handleInput() method.
+// Enemies our player must avoid
+// Enemies our player must avoid
+
+
+var Player = function (_GameObject3) {
+    _inherits(Player, _GameObject3);
+
+    function Player() {
+        _classCallCheck(this, Player);
+
+        var sprite = 'images/char-princess-girl.png';
+        var initXPos = 202;
+        var initYPos = 380;
+
+        var _this3 = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, sprite, initXPos, initYPos, 101, 171));
+
+        _this3.INITIAL_X_POSITION = initXPos;
+        _this3.INITIAL_Y_POSITION = initYPos;
+        _this3.VERTICAL_STEP = 83;
+        _this3.HORIZONTAL_STEP = 101;
+        _this3.MIN_X_POSITION = 0;
+        _this3.MAX_X_POSITION = 404;
+        return _this3;
+    }
+
+    /**
+    * Reset object to ints initial state
+    */
+
+
+    _createClass(Player, [{
+        key: 'reset',
+        value: function reset() {
+            this.x = this.INITIAL_X_POSITION;
+            this.y = this.INITIAL_Y_POSITION;
+        }
+
+        /**
+         * Navigate player when arrow keys are pressed
+         *
+         * @param {String} keyCode  text representation of key pressed by user
+         */
+
+    }, {
+        key: 'handleInput',
+        value: function handleInput(keyCode) {
+            // Return if modal is currently showing
+            if (!modal.classList.contains('close')) {
+                return;
+            }
+            switch (keyCode) {
+                case 'up':
+                    game.playJump();
+                    if (this.y - this.VERTICAL_STEP < 0) {
+                        // winning situation
+                        game.win();
+                    } else {
+                        this.y -= this.VERTICAL_STEP;
+                    }
+                    break;
+                case 'down':
+                    if (this.y + this.VERTICAL_STEP <= this.INITIAL_Y_POSITION) {
+                        game.playJump();
+
+                        this.y += this.VERTICAL_STEP;
+                    }
+                    break;
+                case 'left':
+                    if (this.x - this.HORIZONTAL_STEP >= 0) {
+                        game.playJump();
+
+                        this.x -= this.HORIZONTAL_STEP;
+                    }
+                    break;
+                case 'right':
+                    if (this.x + this.HORIZONTAL_STEP <= this.MAX_X_POSITION) {
+                        game.playJump();
+
+                        this.x += this.HORIZONTAL_STEP;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }]);
+
+    return Player;
+}(GameObject);
+
 /**
  * Game class holding general game info like score and managing game states
  */
+
+
 var Game = function () {
     function Game() {
         _classCallCheck(this, Game);
@@ -360,6 +533,8 @@ var Game = function () {
 }();
 
 // Function to animate clouds after page load
+
+
 window.onload = function () {
     var tl = new TimelineMax({ repeat: -1 });
     tl.to("#clouds", 30, {
@@ -431,4 +606,3 @@ function removeScoreAnimations() {
     scoreBoard.classList.remove('score-lost');
     void scoreBoard.offsetWidth;
 }
-

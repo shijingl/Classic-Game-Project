@@ -24,10 +24,6 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    // canvas.width = 505;
-    // canvas.height = 606;
-    // doc.body.appendChild(canvas);
-
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -81,8 +77,6 @@ var Engine = (function(global) {
         removeOffScreenEntities();
         updateEntities(dt);
         checkCollisions();
-        // updateEntities(dt);
-        // checkCollisions();
     }
 
     /**
@@ -111,6 +105,25 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+    }
+
+    /**
+     * Checks if player overlaps or touchs with enemies.
+     */
+    function checkCollisions() {
+        allEnemies.forEach(function (enemy) {
+            if (player.collides(enemy)) {
+                game.die();
+                return;
+            }
+        });
+
+        allGems.forEach(function (gem) {
+            if (player.collides(gem)) {
+                game.powerUp(gem);
+                return;
+            }
+        });
     }
 
     /* This function initially draws the "game level", it will then call
@@ -166,12 +179,17 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
+        allEnemies.forEach(function (enemy) {
             enemy.render();
         });
 
         player.render();
+
+        allGems.forEach(function (gem) {
+            gem.render();
+        });
     }
+
 
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
