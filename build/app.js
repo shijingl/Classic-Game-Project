@@ -1,9 +1,9 @@
 'use strict';
 
-var _createClass = function () { 
+let _createClass = function () { 
     function defineProperties(target, props) { 
-        for (var i = 0; i < props.length; i++) { 
-            var descriptor = props[i]; 
+        for (let i = 0; i < props.length; i++) { 
+            let descriptor = props[i]; 
             descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; 
             if ("value" in descriptor) descriptor.writable = true; 
             Object.defineProperty(target, descriptor.key, descriptor); 
@@ -39,39 +39,39 @@ function _classCallCheck(instance, Constructor) {
 // Global variables
 
 // Static constant values that don't belong to any particular enemy instance
-var ENEMY_Y_POSITIONS = [60, 145, 230];
-var ENEMY_SPEEDS = [200, 250, 280, 300, 320, 350, 400, 500];
-var ENEMY_CREATION_DELAYS = [200, 300, 400, 500, 650, 750, 900, 1000];
+let ENEMY_Y_POSITIONS = [60, 145, 230];
+let ENEMY_SPEEDS = [200, 250, 280, 300, 320, 350, 400, 500];
+let ENEMY_CREATION_DELAYS = [200, 300, 400, 500, 650, 750, 900, 1000];
 
 // Static constant values that don't belong to any particular gem instance
-var GEM_STRIPES = ['images/gem-blue.png', 'images/gem-orange.png', 'images/gem-green.png'];
-var GEM_X_POSITIONS = [126, 227, 328];
-var GEM_Y_POSITIONS = [115, 200, 275];
-var GEM_EXPIRE_TIMES = [5000, 7000, 8000, 9000];
-var GEM_DELAY_TIMES = [10000, 15000, 20000];
+let GEM_STRIPES = ['images/gem-blue.png', 'images/gem-orange.png', 'images/gem-green.png'];
+let GEM_X_POSITIONS = [126, 227, 328];
+let GEM_Y_POSITIONS = [115, 200, 275];
+let GEM_EXPIRE_TIMES = [5000, 7000, 8000, 9000];
+let GEM_DELAY_TIMES = [10000, 15000, 20000];
 
 // Game variable
-var game = void 0;
+let game = void 0;
 // Array of enemies
-var allEnemies = []; // stores all enemy objects
+let allEnemies = []; // stores all enemy objects
 // Player variable
-var player = void 0;
+let player = void 0;
 // Gem variable
-var allGems = [];
+let allGems = [];
 
 // DOM elements
-var scoreBoard = document.querySelector('#score-board');
-var scoreElement = document.querySelector('.score');
-var modal = document.querySelector('#simpleModal');
-var modalCloseBtn = document.querySelector('.modal-close-btn');
+let scoreBoard = document.querySelector('#score-board');
+let scoreElement = document.querySelector('.score');
+let modal = document.querySelector('#simpleModal');
+let modalCloseBtn = document.querySelector('.modal-close-btn');
 
 // Base class, that has properties and methods that will be used by all
 // inheriting subclassses
 
-var GameObject = function () {
+let GameObject = function () {
     function GameObject(sprite, x, y) {
-        var width = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-        var height = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
+        let width = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+        let height = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
 
         _classCallCheck(this, GameObject);
 
@@ -98,7 +98,7 @@ var GameObject = function () {
     _createClass(GameObject, [{
         key: 'update',
         value: function update() {
-            var dt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+            let dt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
         }
 
         /**
@@ -129,8 +129,8 @@ var GameObject = function () {
     }, {
         key: 'collides',
         value: function collides(other) {
-            var xCheck = this.x <= other.x + other.width / 2 && this.x >= other.x - other.width / 2;
-            var yCheck = other.y <= this.y + this.height / 2 && other.y >= this.y;
+            let xCheck = this.x <= other.x + other.width / 2 && this.x >= other.x - other.width / 2;
+            let yCheck = other.y <= this.y + this.height / 2 && other.y >= this.y;
             return xCheck && yCheck;
         }
     }]);
@@ -141,15 +141,15 @@ var GameObject = function () {
 // Enemies our player must avoid
 
 
-var Enemy = function (_GameObject) {
+let Enemy = function (_GameObject) {
     _inherits(Enemy, _GameObject);
 
     function Enemy() {
         _classCallCheck(this, Enemy);
 
-        var y = randElement(ENEMY_Y_POSITIONS);
+        let y = randElement(ENEMY_Y_POSITIONS);
 
-        var _this = _possibleConstructorReturn(this, (Enemy.__proto__ || Object.getPrototypeOf(Enemy)).call(this, 'images/enemy-bug.png', 0, y, 101, 171));
+        let _this = _possibleConstructorReturn(this, (Enemy.__proto__ || Object.getPrototypeOf(Enemy)).call(this, 'images/enemy-bug.png', 0, y, 101, 171));
 
         _this.speed = randElement(ENEMY_SPEEDS);
         return _this;
@@ -187,7 +187,7 @@ var Enemy = function (_GameObject) {
         key: 'generateEnemies',
         value: function generateEnemies() {
             allEnemies.push(new Enemy());
-            var delay = randElement(ENEMY_CREATION_DELAYS);
+            let delay = randElement(ENEMY_CREATION_DELAYS);
             setTimeout(Enemy.generateEnemies, delay);
         }
 
@@ -210,17 +210,17 @@ var Enemy = function (_GameObject) {
 // Gems our player must collect
 
 
-var Gem = function (_GameObject2) {
+let Gem = function (_GameObject2) {
     _inherits(Gem, _GameObject2);
 
     function Gem() {
         _classCallCheck(this, Gem);
 
-        var x = randElement(GEM_X_POSITIONS);
-        var y = randElement(GEM_Y_POSITIONS);
-        var stripe = randElement(GEM_STRIPES);
+        let x = randElement(GEM_X_POSITIONS);
+        let y = randElement(GEM_Y_POSITIONS);
+        let stripe = randElement(GEM_STRIPES);
 
-        var _this2 = _possibleConstructorReturn(this, (Gem.__proto__ || Object.getPrototypeOf(Gem)).call(this, stripe, x, y, 50, 85));
+        let _this2 = _possibleConstructorReturn(this, (Gem.__proto__ || Object.getPrototypeOf(Gem)).call(this, stripe, x, y, 50, 85));
 
         _this2.expireTime = randElement(GEM_EXPIRE_TIMES);
         switch (stripe) {
@@ -264,7 +264,7 @@ var Gem = function (_GameObject2) {
     }, {
         key: 'generateGems',
         value: function generateGems() {
-            var gem = new Gem();
+            let gem = new Gem();
             allGems.push(gem);
             setTimeout(function () {
                 Gem.expireGem(gem);
@@ -283,17 +283,17 @@ var Gem = function (_GameObject2) {
 // Enemies our player must avoid
 
 
-var Player = function (_GameObject3) {
+let Player = function (_GameObject3) {
     _inherits(Player, _GameObject3);
 
     function Player() {
         _classCallCheck(this, Player);
 
-        var sprite = 'images/char-princess-girl.png';
-        var initXPos = 202;
-        var initYPos = 380;
+        let sprite = 'images/char-princess-girl.png';
+        let initXPos = 202;
+        let initYPos = 380;
 
-        var _this3 = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, sprite, initXPos, initYPos, 101, 171));
+        let _this3 = _possibleConstructorReturn(this, (Player.__proto__ || Object.getPrototypeOf(Player)).call(this, sprite, initXPos, initYPos, 101, 171));
 
         _this3.INITIAL_X_POSITION = initXPos;
         _this3.INITIAL_Y_POSITION = initYPos;
@@ -367,7 +367,7 @@ var Player = function (_GameObject3) {
  */
 
 
-var Game = function () {
+let Game = function () {
     function Game() {
         _classCallCheck(this, Game);
 
@@ -479,18 +479,6 @@ var Game = function () {
     return Game;
 }();
 
-// Function to animate clouds after page load
-
-/*
-window.onload = function () {
-    var tl = new TimelineMax({ repeat: -1 });
-    tl.to("#clouds", 30, {
-        backgroundPosition: "-2247px 0px",
-        //autoRound:false,
-        ease: Linear.easeNone
-    });
-};
-*/
 
 /**
  * IIFE starting game
@@ -504,7 +492,7 @@ modalCloseBtn.addEventListener('click', toggleModal);
 
 // Listens for key presses and send the keys to Player.handleInput() method
 document.addEventListener('keyup', function (e) {
-    var allowedKeys = {
+    let allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
