@@ -1,5 +1,5 @@
 # Classic Arcane Game
-Classic Arcane Game is a complete browser-based arcade game. You can play the game from this link. 
+Classic Arcane Game is a complete browser-based arcade game. You can play the game from [this link](https://shijingl.github.io/Classic-Game-Project/). 
 
 ### How to Play?
 Player needs to control the character to reach the water, without colliding any enemies. 
