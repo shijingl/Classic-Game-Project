@@ -331,7 +331,6 @@ var Player = function (_GameObject3) {
             }
             switch (keyCode) {
                 case 'up':
-                    //game.playJump();
                     if (this.y - this.VERTICAL_STEP < 0) {
                         // winning situation
                         game.win();
@@ -341,22 +340,16 @@ var Player = function (_GameObject3) {
                     break;
                 case 'down':
                     if (this.y + this.VERTICAL_STEP <= this.INITIAL_Y_POSITION) {
-                        //game.playJump();
-
                         this.y += this.VERTICAL_STEP;
                     }
                     break;
                 case 'left':
                     if (this.x - this.HORIZONTAL_STEP >= 0) {
-                        //game.playJump();
-
                         this.x -= this.HORIZONTAL_STEP;
                     }
                     break;
                 case 'right':
                     if (this.x + this.HORIZONTAL_STEP <= this.MAX_X_POSITION) {
-                        //game.playJump();
-
                         this.x += this.HORIZONTAL_STEP;
                     }
                     break;
@@ -380,9 +373,13 @@ var Game = function () {
 
         this._score = 0;
         // Generate Audio objects
+
+        /*
         this.jumpAudio = new Audio();
         this.winLoseAudio = new Audio();
         this.powerUpAudio = new Audio();
+        */
+
         // Initialize game
         this.start();
     }
@@ -400,10 +397,6 @@ var Game = function () {
          * Initialize and start game
          */
         value: function start() {
-            // Play start sound
-
-            //this.playStart();
-
             // Randomly generate enemies
             Enemy.generateEnemies();
             // Instantiate and place the player object in a variable called player
@@ -441,9 +434,6 @@ var Game = function () {
     }, {
         key: 'die',
         value: function die() {
-            
-            // this.playDeath();
-            
             animateScoreLost();
             this.score -= 50;
             player.reset();
@@ -456,9 +446,6 @@ var Game = function () {
     }, {
         key: 'win',
         value: function win() {
-            
-            //this.playWin();
-            
             animateScoreAdd();
             this.score += 10;
             player.reset();
@@ -474,60 +461,11 @@ var Game = function () {
         key: 'powerUp',
         value: function powerUp(gem) {
             Gem.expireGem(gem);
-
-            //this.playPowerup();
-            
             animateScoreAdd();
             this.score += gem.value;
         }
 
-    }, 
-    
-    /*
-    {
-        key: 'playStart',
-        value: function playStart() {
-            this.winLoseAudio.src = 'sounds/start.wav';
-            this.play(this.winLoseAudio);
-        }
-
     }, {
-        key: 'playWin',
-        value: function playWin() {
-            this.winLoseAudio.src = 'sounds/win.wav';
-            this.play(this.winLoseAudio);
-        }
-
-
-    }, {
-        key: 'playDeath',
-        value: function playDeath() {
-            this.winLoseAudio.src = 'sounds/death.wav';
-            this.play(this.winLoseAudio);
-        }
-
-    }, {
-        key: 'playPowerup',
-        value: function playPowerup() {
-            this.powerUpAudio.src = 'sounds/powerup.wav';
-            this.play(this.powerUpAudio);
-        }
-
-    }, {
-        key: 'playJump',
-        value: function playJump() {
-            this.jumpAudio.src = 'sounds/jump.wav';
-            this.play(this.jumpAudio);
-        }
-
-    }, {
-        key: 'play',
-        value: function play(audio) {
-            audio.play();
-        }
-    }, */
-    
-    {
         key: 'score',
         get: function get() {
             return this._score;
