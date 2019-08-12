@@ -3,12 +3,11 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    background: rgb(172,230,255);
-    background: -webkit-gradient(linear, left bottom, left top, color-stop(-1%, rgba(75,152,92,1)), color-stop(50%, rgba(172,230,255,1)));
-    background: -webkit-linear-gradient(bottom, rgba(75,152,92,1) -1%, rgba(172,230,255,1) 50%);
-    background: -o-linear-gradient(bottom, rgba(75,152,92,1) -1%, rgba(172,230,255,1) 50%);
-    background: linear-gradient(0deg, rgba(75,152,92,1) -1%, rgba(172,230,255,1) 50%);
-    font-family: "Visitor", Helvetica, sans-serif;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(-1%, rgb(112, 68, 52)), color-stop(95%, rgb(220, 104, 133)));
+    background: -webkit-linear-gradient(bottom, rgb(112, 68, 52) -1%, rgb(220, 104, 133) 95%);
+    background: -o-linear-gradient(bottom, rgb(112, 68, 52) -1%, rgb(220, 104, 133) 95%);
+    background: linear-gradient(0deg, rgb(112, 68, 52) -1%, rgb(220, 104, 133) 95%);
+    font-family: Helvetica, sans-serif;
 }
 
 
