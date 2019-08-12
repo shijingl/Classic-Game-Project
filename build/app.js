@@ -372,13 +372,6 @@ var Game = function () {
         _classCallCheck(this, Game);
 
         this._score = 0;
-        // Generate Audio objects
-
-        /*
-        this.jumpAudio = new Audio();
-        this.winLoseAudio = new Audio();
-        this.powerUpAudio = new Audio();
-        */
 
         // Initialize game
         this.start();
@@ -488,7 +481,7 @@ var Game = function () {
 
 // Function to animate clouds after page load
 
-
+/*
 window.onload = function () {
     var tl = new TimelineMax({ repeat: -1 });
     tl.to("#clouds", 30, {
@@ -497,6 +490,7 @@ window.onload = function () {
         ease: Linear.easeNone
     });
 };
+*/
 
 /**
  * IIFE starting game
