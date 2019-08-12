@@ -11,7 +11,7 @@ body {
 }
 
 
-/* Score board styles */
+/* Score board */
 #score-board {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -22,8 +22,8 @@ body {
     margin: auto;
     overflow: hidden;
     text-align: center;
-    -webkit-box-shadow: 0 0 10px #888;
-            box-shadow: 0 0 10px #888;
+    -webkit-box-shadow: 0 0 10px #000000;
+            box-shadow: 0 0 10px #000000;
 }
 
 #score-board.score-add {
@@ -55,7 +55,7 @@ body {
     font-size: 16px;
 }
 
-/* Modal styles */
+/* Modal */
 #simpleModal {
 	position: fixed;
 	top: 0;
@@ -84,7 +84,7 @@ body {
 	padding: 5px 20px 15px 20px;
 	-webkit-border-radius: 5px;
 	        border-radius: 5px;
-	background-color: cornflowerblue;
+	background-color: rgb(241, 160, 181);
 }
 
 .modal-content .point {
@@ -97,7 +97,7 @@ body {
 	top: -10px;
 	width: 24px;
 	color: white;
-	background: coral;
+	background: rgb(196, 62, 97);
 	line-height: 25px;
 	right: -12px;
 	text-align: center;
@@ -110,7 +110,7 @@ body {
 }
 
 .modal-close-btn:hover, .modal-close-btn:focus {
-	background-color: rgb(253, 168, 77);
+	background-color: rgb(196, 62, 97);
     cursor: pointer;
 }
 
