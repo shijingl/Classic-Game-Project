@@ -11,7 +11,8 @@ var _createClass = function () {
     } 
     return function (Constructor, protoProps, staticProps) { 
         if (protoProps) defineProperties(Constructor.prototype, protoProps); 
-        if (staticProps) defineProperties(Constructor, staticProps); return Constructor; 
+        if (staticProps) defineProperties(Constructor, staticProps); 
+        return Constructor; 
     }; 
 }();
 
@@ -330,7 +331,7 @@ var Player = function (_GameObject3) {
             }
             switch (keyCode) {
                 case 'up':
-                    game.playJump();
+                    //game.playJump();
                     if (this.y - this.VERTICAL_STEP < 0) {
                         // winning situation
                         game.win();
@@ -340,21 +341,21 @@ var Player = function (_GameObject3) {
                     break;
                 case 'down':
                     if (this.y + this.VERTICAL_STEP <= this.INITIAL_Y_POSITION) {
-                        game.playJump();
+                        //game.playJump();
 
                         this.y += this.VERTICAL_STEP;
                     }
                     break;
                 case 'left':
                     if (this.x - this.HORIZONTAL_STEP >= 0) {
-                        game.playJump();
+                        //game.playJump();
 
                         this.x -= this.HORIZONTAL_STEP;
                     }
                     break;
                 case 'right':
                     if (this.x + this.HORIZONTAL_STEP <= this.MAX_X_POSITION) {
-                        game.playJump();
+                        //game.playJump();
 
                         this.x += this.HORIZONTAL_STEP;
                     }
@@ -400,7 +401,9 @@ var Game = function () {
          */
         value: function start() {
             // Play start sound
-            this.playStart();
+
+            //this.playStart();
+
             // Randomly generate enemies
             Enemy.generateEnemies();
             // Instantiate and place the player object in a variable called player
@@ -438,7 +441,9 @@ var Game = function () {
     }, {
         key: 'die',
         value: function die() {
-            this.playDeath();
+            
+            // this.playDeath();
+            
             animateScoreLost();
             this.score -= 50;
             player.reset();
@@ -451,7 +456,9 @@ var Game = function () {
     }, {
         key: 'win',
         value: function win() {
-            this.playWin();
+            
+            //this.playWin();
+            
             animateScoreAdd();
             this.score += 10;
             player.reset();
@@ -467,25 +474,22 @@ var Game = function () {
         key: 'powerUp',
         value: function powerUp(gem) {
             Gem.expireGem(gem);
-            this.playPowerup();
+
+            //this.playPowerup();
+            
             animateScoreAdd();
             this.score += gem.value;
         }
 
-        /**
-         * Play start audio
-         */
-
-    }, {
+    }, 
+    
+    /*
+    {
         key: 'playStart',
         value: function playStart() {
             this.winLoseAudio.src = 'sounds/start.wav';
             this.play(this.winLoseAudio);
         }
-
-        /**
-         * Play win audio
-         */
 
     }, {
         key: 'playWin',
@@ -494,9 +498,6 @@ var Game = function () {
             this.play(this.winLoseAudio);
         }
 
-        /**
-         * Play death audio
-         */
 
     }, {
         key: 'playDeath',
@@ -505,20 +506,12 @@ var Game = function () {
             this.play(this.winLoseAudio);
         }
 
-        /**
-         * Play powerup audio
-         */
-
     }, {
         key: 'playPowerup',
         value: function playPowerup() {
             this.powerUpAudio.src = 'sounds/powerup.wav';
             this.play(this.powerUpAudio);
         }
-
-        /**
-         * Play jump audio
-         */
 
     }, {
         key: 'playJump',
@@ -527,18 +520,14 @@ var Game = function () {
             this.play(this.jumpAudio);
         }
 
-        /**
-         * Play audio
-         *
-         * @param {Audio} audio     audio object that should be played
-         */
-
     }, {
         key: 'play',
         value: function play(audio) {
             audio.play();
         }
-    }, {
+    }, */
+    
+    {
         key: 'score',
         get: function get() {
             return this._score;
