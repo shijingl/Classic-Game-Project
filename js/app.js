@@ -33,8 +33,16 @@ function _inherits(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) { 
         throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); 
     } subClass.prototype = Object.create(superClass && superClass.prototype, { 
-        constructor: { value: subClass, enumerable: false, writable: true, configurable: true } 
-    }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; 
+        constructor: { 
+            value: subClass, 
+            enumerable: false, 
+            writable: true, 
+            configurable: true 
+        } 
+    }); 
+    if (superClass) {
+        Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; 
+    }
 }
 
 function _classCallCheck(instance, Constructor) { 
@@ -287,8 +295,6 @@ let Gem = function (_GameObject2) {
 // This class requires an update(), render() and
 // a handleInput() method.
 // Enemies our player must avoid
-// Enemies our player must avoid
-
 
 let Player = function (_GameObject3) {
     _inherits(Player, _GameObject3);
